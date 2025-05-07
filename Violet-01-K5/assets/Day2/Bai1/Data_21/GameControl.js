@@ -13,11 +13,14 @@ cc.Class({
         this.player = this.playerNode.getComponent('Player_D2B1');
         this.enemy = this.enemyNode.getComponent('Enemy_D2B1');
         this.isGameOver = false;
+
+        this.playerSprite = this.player.playerImg;
+        this.enemySprite = this.enemy.enemyImg;
     },
 
     start(){
 
-        his.notify.string = "";
+        this.notify.string = "";
     },
 
     onClickAttack() {
@@ -34,10 +37,11 @@ cc.Class({
 
     playerAttack(type) {
         if (this.isGameOver) return;
-
+       
         let damage = 0;
 
         if (type === "attack") {
+            
             damage = Math.max(0, this.player.playerAttack - this.enemy.enemyDefense);
             this.enemy.enemyHP -= damage;
             this.enemy.hpLb.string = "HP: " + this.enemy.enemyHP;
@@ -48,6 +52,7 @@ cc.Class({
                 this.enemy.enemyHP -= damage;
                 this.player.playerEnergy -= 30;
                 this.enemy.hpLb.string = "HP: " + this.enemy.enemyHP;
+                this.player.energyLb.string = "Energy: " + this.player.playerEnergy;
             } 
             else {
                 return;
@@ -67,7 +72,6 @@ cc.Class({
         }
 
         this.scheduleOnce(() => this.enemyTurn(), 1); 
-        
     },
 
     enemyTurn() {
@@ -76,7 +80,6 @@ cc.Class({
         const damage = Math.max(0, this.enemy.enemyAttack - this.player.playerDefense);
         this.player.playerHP -= damage;
         this.player.hpLb.string = "HP: " + this.player.playerHP;
-        
 
         if (this.player.playerHP <= 0) {
             this.player.playerHP = 0;
