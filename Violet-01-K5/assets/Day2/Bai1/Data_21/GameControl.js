@@ -1,4 +1,8 @@
 
+//Quản lý lượt(khi nào biết là user đang đánh và khi lượt của quái thì user không được spam kỹ năng)
+//Máu ko được âm
+//Thanh energy đầy sẽ không cho spam nút charge hoặc sẽ không mất lượt user khi spam energy
+//Random HP và def mỗi khi tấn công thay vì random cố định khi bắt đầu trò chơi
 cc.Class({
     extends: cc.Component,
 
@@ -7,6 +11,7 @@ cc.Class({
         enemyNode: cc.Node,
         notify: cc.Label,
         gameEnd: cc.Node,
+        chargeBtn: cc.Button,
     },
 
     onLoad () {
@@ -22,6 +27,9 @@ cc.Class({
 
         this.notify.string = "";
     },
+    update(dt){
+        this.player.playerEnergy == 100? this.chargeBtn.interactable = false : this.chargeBtn.interactable = true;
+    },
 
     onClickAttack() {
         this.playerAttack("attack");
@@ -32,7 +40,9 @@ cc.Class({
     },
 
     onClickCharge() {
-        this.playerAttack("charge");
+        // this.playerAttack("charge");
+        this.player.onChargeEnergy();
+        this.player.energyLb.string = "Energy: " + this.player.playerEnergy;
     },
 
     playerAttack(type) {
@@ -58,10 +68,10 @@ cc.Class({
                 return;
             }
         } 
-        else if (type === "charge") {
-            this.player.onChargeEnergy();
-            this.player.hpLb.string = "HP: " + this.player.playerHP;
-        }
+        // else if (type === "charge") {
+        //     this.player.onChargeEnergy();
+        //     this.player.hpLb.string = "HP: " + this.player.playerHP;
+        // }
 
         if (this.enemy.enemyHP <= 0) {
             this.enemy.enemyHP = 0;
