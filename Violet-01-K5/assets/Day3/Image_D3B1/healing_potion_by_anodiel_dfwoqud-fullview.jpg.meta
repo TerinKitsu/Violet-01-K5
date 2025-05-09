@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.4",
+  "ver": "2.3.3",
   "uuid": "c03fd565-c9d9-49e4-9124-a555fecd4ba5",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -7,8 +7,6 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
-  "width": 1280,
-  "height": 1199,
   "platformSettings": {},
   "subMetas": {
     "healing_potion_by_anodiel_dfwoqud-fullview": {

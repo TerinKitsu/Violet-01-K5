@@ -1,5 +1,5 @@
 {
-  "ver": "2.3.4",
+  "ver": "2.3.3",
   "uuid": "5cfc75c3-2734-4b66-b0d8-87557d072d9e",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -7,8 +7,6 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
-  "width": 600,
-  "height": 600,
   "platformSettings": {},
   "subMetas": {
     "Pink-Monster": {

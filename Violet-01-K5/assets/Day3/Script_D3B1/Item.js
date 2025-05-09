@@ -3,7 +3,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        name: "", 
+        itemName: "", 
         quantility: 0, 
         type: "",
         effect: "",
@@ -12,14 +12,14 @@ cc.Class({
     },
 
     onLoad () {
-        let inventoryManagerNode = cc.find("InventoryManage");
-        if (inventoryManagerNode) {
-            this.inventoryManager = inventoryManagerNode.getComponent("InventoryManage");
+        let inventoryManageNode = cc.find("InventoryManage");
+        if (inventoryManageNode) {
+            this.inventoryManager = inventoryManageNode.getComponent("InventoryManage");
         }
 
         //Click on Item to show info
         this.node.on(cc.Node.EventType.TOUCH_END, function (event) {
-            this.inventoryManager.showInfoItem(this.name, this.quantility, this.type, this.effect, this.node);
+            this.inventoryManager.showInfoItem(this.itemName, this.quantility, this.type, this.effect, this.node);
         }, this);
     },
 

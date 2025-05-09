@@ -62,7 +62,7 @@ cc.Class({
     },
 
     start () {
-        this.infoPanel.active = false;
+        //this.infoPanel.active = false;
 
         this.loadItems();
     },
@@ -91,7 +91,7 @@ cc.Class({
         }
         else if(item.type == "Equipment"){
             this.removeItem();
-            this.noityLb.string = "Equiped " + item.name;
+            this.noityLb.string = "Equiped " + item.itemName;
             this.scheduleOnce(() => {
                 this.noityLb.node.active = true;
             }, 0.2);
