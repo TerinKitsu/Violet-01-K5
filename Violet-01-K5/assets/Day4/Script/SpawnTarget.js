@@ -9,7 +9,7 @@ cc.Class({
 
     onLoad () {
         this.node.on("Target_Clicked", this.onTargetSpawn, this)
-
+        this.gameControl = this.gameControler.getComponent('GameController');
         //Get window scale
         this.width = cc.winSize.width;
         this.height = cc.winSize.height;
@@ -28,22 +28,21 @@ cc.Class({
 
     onTargetSpawn(event){
         let score = event.detail.score;
-        this.gameControler.sumScore(score);
+        this.gameControl.sumScore(score);
         this.spawn();
     },
 
     spawn(){
-        // if(this.gameControler.isGameOverReturn()){
-        //      this.node.off("Target_Clicked", this.onTargetSpawn, this);
-        //      return;
-        // }
-        //cc.log("AA");
+        if(this.gameControl.isGameOverReturn()){
+             this.node.off("Target_Clicked", this.onTargetSpawn, this);
+             return;
+        }
+        cc.log("AA");
         let newTarget = cc.instantiate(this.targetPrefap);
         this.randomPotison();
         
-        newTarget.parent = this.node;
-        newTarget.setPotision(this.x, this.y);
-        
+        newTarget.setPosition(this.x, this.y);
+        newTarget.parent = this.node;   
     },
 
     randomPotison(){

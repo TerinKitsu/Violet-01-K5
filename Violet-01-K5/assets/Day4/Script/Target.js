@@ -11,9 +11,9 @@ cc.Class({
 
     start () {
         this.score = this._randomInt(1, 10);
-        this.scoreLabel.string = this.score;
+        this.scoreLb.string = this.score;
 
-        let timeLife = this._randomFloat(1, 2);
+        let timeLife = this._randomFloat(3, 5);
         this.scheduleOnce(() => {
             this.onMiss();
         }, timeLife);
@@ -26,10 +26,11 @@ cc.Class({
         this.node.destroy();
     },
     
-    onMiss(){
+    onClick(){
         let event = new cc.Event.EventCustom("Target_Clicked", true);
         event.detail = {score: this.score};
         this.node.dispatchEvent(event);
+        console.log("Hehe")
         this.node.destroy();
     },
 
