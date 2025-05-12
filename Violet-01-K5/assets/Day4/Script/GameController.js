@@ -6,7 +6,10 @@ cc.Class({
         totalScoreLb: cc.Label,
         timeLb: cc.Label,
         resultPage: cc.Node,
-        finalScoreLb: cc.Label
+        finalScoreLb: cc.Label,
+        pausePanel: cc.Node,
+
+        isPaused: false,
     },
 
     onLoad () {
@@ -50,6 +53,23 @@ cc.Class({
 
     onRestartGame(){
         cc.director.loadScene("D4_B1");
+        this.onResumeGame();
+    },
+
+    onPauseGame(){
+        this.isPaused = !this.isPaused;
+        this.pausePanel.active = this.isPaused;
+        if(this.isPaused)
+            cc.director.pause();
+        else
+            this.onResumeGame();
+    },
+
+    onResumeGame(){
+        if(this.isPaused){
+            this.isPaused = !this.isPaused;
+            this.pausePanel.active = this.isPaused;
+        }
         cc.director.resume();
     }
 });
