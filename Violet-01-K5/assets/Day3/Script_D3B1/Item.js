@@ -1,32 +1,45 @@
-
 cc.Class({
     extends: cc.Component,
-
+    
     properties: {
-        itemName: "", 
-        quantility: 0, 
-        type: "",
-        effect: "",
-
-        inventoryManager: cc.Component,
+        image: cc.Sprite,
+        quantityLb: cc.Label
     },
 
-    onLoad () {
-        let inventoryManageNode = cc.find("InventoryManage");
-        if (inventoryManageNode) {
-            this.inventoryManager = inventoryManageNode.getComponent("InventoryManage");
-        }
-
-        //Click on Item to show info
-        this.node.on(cc.Node.EventType.TOUCH_END, function (event) {
-            this.inventoryManager.showInfoItem(this.itemName, this.quantility, this.type, this.effect, this.node);
-        }, this);
+    onLoad(){
+        this.node.on("INIT_DATA", this.initData, this);
+        // this.node.on("ON_CLICK", this.onClick, this);
+        // this.node.newItemComp = this;
     },
 
-    initItem(name, quantility, type, effect){
-        this.name = name;
-        this.quantility = quantility;
-        this.type = type;
-        this.effect = effect;
+    initData(data){
+        const{image, quantity} = data;
+        this.image.spriteFrame = image;
+        this.quantityLb.string = quantity;
+        this.data = data;
+    },
+
+    onClick(){
+        const customeEvent = new cc.Event.EventCustom('ON_ITEM_CLICK', true);
+        customeEvent.setUserData({
+            itemData: this.data,
+        })
+
+        this.node.dispatchEvent(customeEvent);
+        // tthis.node.dispatchEvent( new cc.Event.EventCustom('ON_ITEM_CLICK', true)); có thể khai báo như vầy nếu không tạo customeEvent như trên
+    },
+
+    onUse(){
+        const customeEvent = new cc.Event.EventCustom('ON_ITEM_USE', true);
+        customeEvent.setUserData({
+            itemData: this.data,
+        })
+
+        this.node.dispatchEvent(customeEvent);
+        // tthis.node.dispatchEvent( new cc.Event.EventCustom('ON_ITEM_CLICK', true)); có thể khai báo như vầy nếu không tạo customeEvent như trên
+    },
+
+    onDestroy(){
+        this.node.off("INIT_DATA", this.initData, this);
     },
 });

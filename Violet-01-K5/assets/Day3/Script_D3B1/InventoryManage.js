@@ -1,123 +1,123 @@
+const dataItem = cc.Class({
+    name: "dataItem",
+    properties: {
+        keyItem: "",
+        image: cc.SpriteFrame,
+        nameItem: "",
+        type: "",
+        quantity: 0,
+        effect: "",
+    }
+});
+
+
 
 cc.Class({
     extends: cc.Component,
 
     properties: {
-        nameLb: cc.Label,
-        quantilityLb: cc.Label,
-        typeLb: cc.Label,
-        effecLb: cc.Label,
-        noityLb: cc.Label,
+        holder: cc.Node,
+        item: cc.Prefab,
+        rightPanel: cc.Node,
+        useBtn: cc.Node,
+        dropBtn: cc.Node,
+        messageLb: cc.Label,
 
-        infoPanel: cc.Node,
-        itemNode: cc.Node,
-        layoutItems: cc.Node,
+        showImage: cc.Sprite,
+        showName: cc.Label,
+        showType: cc.Label,
+        showQuantity: cc.Label,
+        showEffect: cc.Label,
 
-        itemPrefabs: {
+        listData: {
             default: [],
-            type: [cc.Prefab] 
-        },
-
-        
+            type: dataItem,
+        }
     },
-    //Crate Object
-    onLoad () {
-        this.itemsData = [
-            {
-                prefabIndex: 0,
-                name: "Sword",
-                quantility: 1,
-                type: "Equipment",
-                effect: "+10 ATK"
-            },
-            {
-                prefabIndex: 1,
-                name: "Shield",
-                quantility: 1,
-                type: "Equipment",
-                effect: "+10 DEF"
-            },
-            {
-                prefabIndex: 2,
-                name: "Mint",
-                quantility: 7,
-                type: "Craft",
-                effect: "This must do something right?"
-            },
-            {
-                prefabIndex: 3,
-                name: "Potion",
-                quantility: 20,
-                type: "Consumable",
-                effect: "+50 HP"
-            },
-            {
-                prefabIndex: 4,
-                name: "Rose",
-                quantility: 20,
-                type: "Craft",
-                effect: "It's smell lovely"
-            },
-        ];
-    },
-
-    start () {
-        //this.infoPanel.active = false;
-
-        this.loadItems();
-    },
-
-
-    //Load Item Prefab
-    loadItems() {
-        this.itemsData.forEach((item) => { 
-            let itemPrefab = this.itemPrefabs[item.prefabIndex];
-            let newItem = cc.instantiate(itemPrefab);
-            newItem.parent = this.layoutItems;
     
-            let itemScript = newItem.getComponent("Item");
-            if (itemScript) {
-                itemScript.initItem(item.name, item.quantility, item.type, item.effect); 
+    currentItemNode: null,
+    currentItemData: null,
+
+    onLoad(){
+        this.node.on("ON_ITEM_CLICK", this.itemClick, this);
+        // this.node.on("ON_ITEM_USE", this.onUseItem, this);
+    },
+
+    start(){
+        for(let i = 0; i < this.listData.length; i++){
+            const data = this.listData[i];
+            const item = cc.instantiate(this.item);
+            item.parent = this.holder;
+            // item.newItemComp.initData();
+            item.emit("INIT_DATA", data);
+        }
+    },
+
+   itemClick(event){
+
+    this.rightPanel.active = true;
+    event.stopPropagation();
+    const data = event.getUserData();
+
+    cc.log(data.itemData.type == "Craft");
+    data.itemData.type == "Craft" ? this.useBtn.active = false : this.useBtn.active = true;
+    this.dropBtn.active = true;
+
+    // cc.log("itemCLick", data);
+    this.showImage.spriteFrame = data.itemData.image;//itemData lấy từ onClick của Item.JS
+    this.showName.string = data.itemData.nameItem;
+    this.showQuantity.string = data.itemData.quantity;
+    this.showType.string = data.itemData.type;
+    this.showEffect.string = data.itemData.effect;
+
+    this.currentItemNode = event.target;
+    this.currentItemData = data.itemData;
+   },   
+
+    onUseItem() {
+        if (!this.currentItemNode || !this.currentItemData) return;
+
+        const type = this.currentItemData.type;
+
+        if (type === "Equipment") {
+            this.showMessage(`Đã trang bị:  ${this.currentItemData.nameItem}`);
+            this.currentItemNode.destroy();
+            this.removeItemFromList(this.currentItemData.keyItem);
+        } 
+        else if (type === "Consumable") {
+            this.currentItemData.quantity--;
+            if (this.currentItemData.quantity <= 0) {
+                this.currentItemNode.destroy();
+                this.removeItemFromList(this.currentItemData.keyItem);
+            } else {
+                this.currentItemNode.getComponent("Item").initData(this.currentItemData);
+                this.showQuantity.string = this.currentItemData.quantity;
             }
-        });
+        }
     },
 
-    useItem(){
-        let item = this.itemNode.getComponent("Item");
-        if(item.type == "Consumable"){
-            item.quantility--;
-            if(item.quantility <= 0)
-                this.removeItem();
-        }
-        else if(item.type == "Equipment"){
-            this.removeItem();
-            this.noityLb.string = "Equiped " + item.itemName;
-            this.scheduleOnce(() => {
-                this.noityLb.node.active = true;
-            }, 0.2);
-            this.scheduleOnce(() => {
-                this.noityLb.node.active = false;
-            }, 3);
-        }
-        this.updateUI(item.name, item.quantility, item.type, item.effect);
+    onDropItem() {
+        if (!this.currentItemNode || !this.currentItemData) return;
+
+        this.currentItemNode.destroy();
+        this.removeItemFromList(this.currentItemData.keyItem);
     },
 
-    updateUI(name, quantility, type, effect){
-        this.nameLb.string = name;
-        this.quantilityLb.string = quantility;
-        this.typeLb.string = type;
-        this.effecLb.string = effect;
+    removeItemFromList(key) {
+        this.listData = this.listData.filter(item => item.keyItem !== key);
+        this.rightPanel.active = false;
     },
+
+    showMessage(text) {
+        this.messageLb.string = text;
+        this.messageLb.node.active = true;
     
-
-    showInfoItem(name, quantility, type, effect, itemNode){
-        this.updateUI(name, quantility, type, effect);
-        this.infoPanel.active = true;
-        this.itemNode = itemNode;
-    },
-
-    removeItem(){
-        this.itemNode.destroy();
-        this.infoPanel.active = false;
-    },
+        // Hide Label after 1 second
+        cc.tween(this.messageLb.node)
+            .delay(1)
+            .call(() => {
+                this.messageLb.node.active = false;
+            })
+            .start();
+    }
 });
