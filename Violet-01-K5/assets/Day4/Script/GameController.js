@@ -46,5 +46,10 @@ cc.Class({
     gameOverUI(){
         this.finalScoreLb.string = this.totalScoreLb.string;
         this.resultPage.active = true;
+    },
+
+    onRestartGame(){
+        cc.director.loadScene("D4_B1");
+        cc.director.resume();
     }
 });

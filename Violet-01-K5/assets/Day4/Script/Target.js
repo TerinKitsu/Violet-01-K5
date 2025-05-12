@@ -11,9 +11,9 @@ cc.Class({
 
     start () {
         this.score = this._randomInt(1, 10);
-        this.scoreLb.string = this.score;
+        this.scoreLb.string = "+ " + this.score;
 
-        let timeLife = this._randomFloat(3, 5);
+        let timeLife = this._randomFloat(0.3, 0.8);
         this.scheduleOnce(() => {
             this.onMiss();
         }, timeLife);

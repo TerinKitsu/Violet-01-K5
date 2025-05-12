@@ -11,8 +11,8 @@ cc.Class({
         this.node.on("Target_Clicked", this.onTargetSpawn, this)
         this.gameControl = this.gameControler.getComponent('GameController');
         //Get window scale
-        this.width = cc.winSize.width;
-        this.height = cc.winSize.height;
+        this.width = cc.winSize.width - 200;
+        this.height = cc.winSize.height - 200;
         this.halfW = this.width / 2;
         this.halfH = this.height / 2;
     },
