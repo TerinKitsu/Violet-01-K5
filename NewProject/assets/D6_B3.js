@@ -3,7 +3,7 @@ cc.Class({
 
     properties: {
         logLabel: cc.Label,
-        imageNode: cc.Node, // Node có Sprite component để hiển thị ảnh
+        imageNode: cc.Node, 
     },
 
     async onLoad() {
@@ -44,10 +44,9 @@ cc.Class({
             await this.delay(2000);
         }
 
-        this.appendLog("✅ Đã tải xong toàn bộ ảnh.");
+        this.appendLog("Đã tải xong toàn bộ ảnh.");
     },
 
-    // ✅ Convert Blob -> Texture2D để hiển thị
     convertBlobToTexture(blob) {
         return new Promise((resolve, reject) => {
             const img = new Image();

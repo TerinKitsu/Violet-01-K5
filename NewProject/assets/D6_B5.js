@@ -2,7 +2,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        logLabel: cc.Label,  // Gắn label từ Editor để hiển thị kết quả
+        logLabel: cc.Label,  
     },
 
     // Hàm chạy đầu tiên khi Node được load
@@ -10,22 +10,23 @@ cc.Class({
         this.logServerTimeLatency();
     },
 
-    // ✅ Hàm chính - gọi 10 lần để đo độ trễ
+    //Gọi 10 lần để đo độ trễ
     async logServerTimeLatency() {
-        let startTime = await this.getServerTime(); // Gọi lần đầu để lấy mốc ban đầu
+        let startTime = await this.getServerTime(); // Lấy mốc thời gian ban đầu
 
         for (let i = 0; i < 10; i++) {
             const currentTime = await this.getServerTime(); // Gọi lại thời gian từ server
             const latency = currentTime - startTime;        // Tính độ trễ giữa 2 lần gọi
             startTime = currentTime;                         // Cập nhật mốc thời gian mới
+            //const message1 = `🕒 Lần ${i + 1} - Hiện tại: ${currentTime}ms\n`;
+            const message = `🕒 Lần ${i + 1} - Độ trễ: ${latency}ms\n\n`;
 
-            const message = `🕒 Lần ${i + 1} - Độ trễ: ${latency}ms\n`;
-            this.appendToLabel(message);                     // In kết quả lên màn hình
+            //this.appendToLabel(message1);                     
+            this.appendToLabel(message);
 
-            await this.delay(1000);                          // Chờ 1 giây rồi tiếp tục
+            await this.delay(1000);                          // Chờ 1 giây rồi tiếp tục in this.appendToLable
         }
     },
-
     // ✅ Hàm hỗ trợ - lấy thời gian từ server
     async getServerTime() {
         try {

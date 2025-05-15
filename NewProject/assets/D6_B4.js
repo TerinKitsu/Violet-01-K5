@@ -22,7 +22,7 @@ cc.Class({
     start(){
         
     },
-
+//Hàm thực thi nhưng sẽ đợi hàm trước thực thi sau đó mới tới hàm đang yêu cầu
     async contribute(stepTime, ...stores) {
         for (let store of stores) {
             if (!store.isComplete) {
@@ -31,7 +31,7 @@ cc.Class({
         }
     },
 });
-
+//Tạo class store với phương thức đợi và thực thi
 class Store {
     constructor(name) {
       this.name = name;

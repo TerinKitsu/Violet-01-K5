@@ -17,17 +17,6 @@ async function getServerTimeAsync() {
     }
 }
 
-// async function showServerTime() {
-//     const serverTime = await getServerTimeAsync();
-
-//     if (serverTime) {
-//         const date = new Date(serverTime);
-//         console.log("⏰ Server Time:", date.toLocaleString());
-//     } else {
-//         console.log("❌ Không thể lấy thời gian từ server");
-//     }
-// }
-
 cc.Class({
     extends: cc.Component,
 
@@ -49,3 +38,49 @@ cc.Class({
         }
     }
 });
+
+// cc.Class({
+//     extends: cc.Component,
+
+//     properties: {
+//         label: cc.Label, // gán label từ Editor để hiển thị kết quả
+//     },
+
+//     // Hàm này chạy khi node được khởi tạo
+//     async start() {
+//         try {
+//             const time = await this.getServerTime(); // Gọi hàm bất đồng bộ
+//             this.label.string = 'Server Time (ms): ' + time; // Hiển thị thời gian server
+//         } catch (e) {
+//             this.label.string = 'Lỗi: ' + e.message;
+//         }
+//     },
+
+//     // Hàm bất đồng bộ lấy thời gian từ server
+//     async getServerTime() {
+//         return new Promise((resolve, reject) => {
+//             let xmlHttp;
+//             try {
+//                 xmlHttp = new XMLHttpRequest(); // Tạo XMLHttpRequest
+//                 xmlHttp.open('HEAD', window.location.href.toString(), true); // Gửi request dạng HEAD
+//                 xmlHttp.setRequestHeader('Content-Type', 'text/html');
+
+//                 // Khi request xong
+//                 xmlHttp.onreadystatechange = function () {
+//                     if (xmlHttp.readyState === 4) {
+//                         if (xmlHttp.status === 200) {
+//                             const date = xmlHttp.getResponseHeader("Date");
+//                             resolve(new Date(date).getTime()); // Trả về thời gian
+//                         } else {
+//                             reject(new Error("Không lấy được thời gian từ server"));
+//                         }
+//                     }
+//                 };
+
+//                 xmlHttp.send(null); // Gửi request
+//             } catch (err) {
+//                 reject(err); // Báo lỗi nếu không hỗ trợ XMLHttpRequest
+//             }
+//         });
+//     }
+// });

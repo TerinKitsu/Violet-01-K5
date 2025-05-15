@@ -6,31 +6,41 @@ cc.Class({
     },
 
     async onLoad() {
-        // 1. Tạo circuit breaker từ getServerTime trong 2 giây
+        // Tạo circuit breaker từ getServerTime trong 2 giây
         this.getTimeLimited = await this.circuitBreaker(this.getServerTime, 2000);
 
-        // 2. Gọi sớm sau 300ms => ok
+        // Gọi sớm trước threshold
         setTimeout(async () => {
             const result = await this.getTimeLimited();
             this.appendLog(`Gọi sau 300ms: ${result}`);
         }, 300);
 
-        // 3. Gọi trễ sau 2100ms => service closed
+        setTimeout(async () => {
+            const result = await this.getTimeLimited();
+            this.appendLog(`Gọi sau 1000ms: ${result}`);
+        }, 1000);
+
+        // Gọi trễ sau threshold
         setTimeout(async () => {
             const result = await this.getTimeLimited();
             this.appendLog(`Gọi sau 2100ms: ${result}`);
         }, 2100);
+
+        setTimeout(async () => {
+            const result = await this.getTimeLimited();
+            this.appendLog(`Gọi sau 2300ms: ${result}`);
+        }, 2300);
     },
 
-    // ✅ Hàm circuitBreaker
+    // Tạo hàm circuitBreaker bắt sự kiện timeout
     async circuitBreaker(fn, timeThreshold) {
-        let isOpen = false;
+        let state = "Close";
         setTimeout(() => { 
-            isOpen = true; 
+            state = "Open"; 
         }, timeThreshold);
 
         return async function () {
-            if (isOpen) {
+            if (state === "Open") {
                 return "service closed";
             } 
             else {
@@ -39,7 +49,7 @@ cc.Class({
         };
     },
 
-    // ✅ Hàm lấy thời gian từ server
+    //Hàm lấy thời gian từ server
     async getServerTime() {
         try {
             const response = await fetch(window.location.href, { 
@@ -48,11 +58,10 @@ cc.Class({
             const serverDate = response.headers.get("Date");
             return new Date(serverDate).getTime();
         } catch (err) {
-            return Date.now(); // fallback
+            return Date.now(); 
         }
     },
-
-    // ✅ Ghi log ra label
+   
     appendLog(text) {
         this.logLabel.string += text + "\n";
     }
