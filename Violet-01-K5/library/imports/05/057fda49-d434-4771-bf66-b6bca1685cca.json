@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "healing_potion_by_anodiel_dfwoqud-fullview",
+    "texture": "c03fd565-c9d9-49e4-9124-a555fecd4ba5",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      1280,
+      1199
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      1280,
+      1199
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

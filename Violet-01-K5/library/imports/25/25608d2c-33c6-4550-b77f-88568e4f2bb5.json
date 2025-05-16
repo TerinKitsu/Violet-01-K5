@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "deep-ocean-background-vector",
+    "texture": "7e80ce01-bd55-452a-9abf-fb7a8ad74c66",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      1386,
+      980
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      1386,
+      980
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

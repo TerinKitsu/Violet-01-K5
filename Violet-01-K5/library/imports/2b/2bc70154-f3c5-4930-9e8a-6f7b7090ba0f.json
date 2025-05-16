@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "ephnel17",
+    "texture": "135f187f-789b-4d9b-b283-d85afa5fcfa6",
+    "atlas": "",
+    "rect": [
+      27,
+      42,
+      559,
+      826
+    ],
+    "offset": [
+      6,
+      -5
+    ],
+    "originalSize": [
+      601,
+      900
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "811475_pause_pause button_media_multimedia_music_icon",
+    "texture": "c4b169d6-df66-4398-b3f4-631a777dcaec",
+    "atlas": "",
+    "rect": [
+      0,
+      16,
+      512,
+      488
+    ],
+    "offset": [
+      0,
+      -4
+    ],
+    "originalSize": [
+      512,
+      512
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}
