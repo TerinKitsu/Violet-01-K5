@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "Pink-Monster",
+    "texture": "5cfc75c3-2734-4b66-b0d8-87557d072d9e",
+    "atlas": "",
+    "rect": [
+      58,
+      19,
+      483,
+      568
+    ],
+    "offset": [
+      -0.5,
+      -3
+    ],
+    "originalSize": [
+      600,
+      600
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}
